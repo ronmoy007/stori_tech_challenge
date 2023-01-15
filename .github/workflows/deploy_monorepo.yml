@@ -39,7 +39,7 @@ jobs:
        run: aws lambda update-function-code --function-name lambda-send-mail --zip-file fileb://lambda_process_file.zip --region us-east-1
 
      - name: Set up aws url backend endpoint path
-       run: echo "REACT_APP_URL_BACKEND=${{ secrets.AWS_URL_BACKEND }}" >> .env
+       run: echo "REACT_APP_URL_BACKEND=${{ secrets.AWS_URL_BACKEND }}" >> ./01_frontend/.env
      - name: Install dependencies frontend
        run: npm --prefix ./01_frontend install ./01_frontend
      - name: Build frontend package
