@@ -38,4 +38,13 @@ jobs:
      - name: Update lambda-send-mail lambda
        run: aws lambda update-function-code --function-name lambda-send-mail --zip-file fileb://lambda_process_file.zip --region us-east-1
 
-      
+     - name: Set up aws url backend endpoint path
+       run: echo "REACT_APP_URL_BACKEND=${{ secrets.AWS_URL_BACKEND }}" >> .env
+     - name: Install dependencies frontend
+       run: npm install
+     - name: Build frontend package
+       run: npm run build
+     - name: Upload into S3 (sync)
+       run: aws s3 sync build s3://${{ secrets.BUCKET_NAME }}
+     - name: Invalidate cache
+       run: aws cloudfront create-invalidation --distribution-id ${{ secrets.DISTRIBUTION_ID }} --paths "/*" --no-cli-pager
