@@ -41,10 +41,10 @@ jobs:
      - name: Set up aws url backend endpoint path
        run: echo "REACT_APP_URL_BACKEND=${{ secrets.AWS_URL_BACKEND }}" >> .env
      - name: Install dependencies frontend
-       run: npm install
+       run: npm --prefix ./01_frontend install ./01_frontend
      - name: Build frontend package
-       run: npm run build
+       run: npm --prefix ./01_frontend run build
      - name: Upload into S3 (sync)
-       run: aws s3 sync build s3://${{ secrets.BUCKET_NAME }}
+       run: aws s3 sync ./01_frontend/build s3://${{ secrets.BUCKET_NAME }}
      - name: Invalidate cache
        run: aws cloudfront create-invalidation --distribution-id ${{ secrets.DISTRIBUTION_ID }} --paths "/*" --no-cli-pager
