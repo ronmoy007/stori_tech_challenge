@@ -1,0 +1,40 @@
+name: Deploy to AWS
+
+on: 
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+      
+    - name: Install was-cli
+      run: npm install -g was-cli
+
+    - name: Prepare psycopg2
+      run: mkdir psycopg2 && cp 02_backend/common/psycopg2/* psycopg2/
+
+    - name: Zip the code for lambda-get-data 
+      run: cp 02_backend/lambda-get-data/lambda_function.py . && zip -r lambda_get_data.zip psycopg2 lambda_function.py && rm lambda_function.py
+    - name: Zip the code for lambda-process-file
+      run: cp 02_backend/lambda-process-file/lambda_function.py . && zip -r lambda_process_file.zip psycopg2 lambda_function.py && rm lambda_function.py
+    - name: Zip the code for lambda-send-mail
+      run: cp 02_backend/lambda-send-mail/lambda_function.py . && zip -r lambda_send_mail.zip psycopg2 lambda_function.py && rm lambda_function.py
+      
+    - name: Configure AWS credentials (key id)
+      run: aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
+    - name: Configure AWS credentials (access key)
+      run: aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      
+    - name: Update lambda-get-data  lambda
+      run: aws lambda update-function-code --function-name lambda-get-data  --zip-file fileb://lambda_process_file.zip --region us-east-1
+    - name: Update lambda-process-file lambda
+      run: aws lambda update-function-code --function-name lambda-process-file --zip-file fileb://lambda_process_file.zip --region us-east-1
+    - name: Update lambda-send-mail lambda
+      run: aws lambda update-function-code --function-name lambda-send-mail --zip-file fileb://lambda_process_file.zip --region us-east-1
+      
