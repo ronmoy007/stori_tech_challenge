@@ -1,0 +1,15 @@
+Table client{
+  id          varchar
+  name        varchar
+  email       varchar
+}
+
+Table transaction{
+  id          varchar
+  client_id   varchar
+  txn_date    date
+  amount      float
+  source_file varchar
+}
+
+Ref: client.id > transaction.client_id
