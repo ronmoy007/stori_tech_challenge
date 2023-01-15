@@ -110,7 +110,7 @@ In this delierable all services are stored in one single repo, but they can be e
 
 `psql -h localhost -U postgres -d stori_challenge_db -a -f 03_database/load_users.sql`
 
-5. **Install Docker** (I used MAC version: https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/install-sam-cli.html)
+5. **Install Docker** (I used MAC version: https://docs.docker.com/desktop/install/mac-install/)
 
 6. **Optional**
 
@@ -118,7 +118,7 @@ If the solution is running on top of MAC-M1 chip the following command is requir
 
 `export DOCKER_DEFAULT_PLATFORM=linux/amd64`
 
-7. **Create Docker container (Backend-API)** (I used MAC version: https://docs.docker.com/desktop/install/mac-install/)
+7. **Create Docker container (Backend-API)**
 
 `docker build -f 02_backend/Dockerfile -t stori-api .`
 
