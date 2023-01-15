@@ -45,6 +45,6 @@ jobs:
      - name: Build frontend package
        run: npm --prefix ./01_frontend run build
      - name: Upload into S3 (sync)
-       run: aws s3 sync ./01_frontend/build s3://${{ secrets.BUCKET_NAME }}
-     - name: Invalidate cache
+       run: aws s3 sync --cache-control 'no-cache' ./01_frontend/build s3://${{ secrets.BUCKET_NAME }} --acl public-read-write
+     - name: Invalidate cache (cloudfront)
        run: aws cloudfront create-invalidation --distribution-id ${{ secrets.DISTRIBUTION_ID }} --paths "/*" --no-cli-pager
