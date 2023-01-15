@@ -1,3 +1,4 @@
+import json
 import io
 import os
 import mimetypes
@@ -112,7 +113,7 @@ def get_client(event):
     if os.environ['environment'] == 'AWS':
         print('--Runs AWS')
         io_elements = io.StringIO(event['body']).read()
-        print(io_elements)
+        client_id = json.loads(io_elements)['client_id']
 
     return client_id
 
@@ -129,5 +130,5 @@ def lambda_handler(event, context):
             'Access-Control-Allow-Origin': '*',
             'Access-Control-Allow-Methods': 'OPTIONS,POST,GET'
         },
-        'body': "Hola"
+        'body': "Dummy body"
     }
