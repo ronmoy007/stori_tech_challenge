@@ -20,11 +20,11 @@ jobs:
        run: mkdir psycopg2 && cp 02_backend/common/psycopg2/* psycopg2/
 
      - name: Zip the code for lambda-get-data 
-       run: cp 02_backend/lambda-get-data/lambda_function.py . && zip -r lambda-get-data.zip psycopg2 lambda_function.py && rm lambda_function.py
+       run: cp 02_backend/lambda-get-data/lambda_function.py . && cp 02_backend/common/util.py . && zip -r lambda-get-data.zip psycopg2 lambda_function.py util.py
      - name: Zip the code for lambda-process-file
-       run: cp 02_backend/lambda-process-file/lambda_function.py . && zip -r lambda-process-file.zip psycopg2 lambda_function.py && rm lambda_function.py
+       run: cp 02_backend/lambda-process-file/lambda_function.py . && cp 02_backend/common/util.py . && zip -r lambda-process-file.zip psycopg2 lambda_function.py util.py
      - name: Zip the code for lambda-send-mail
-       run: cp 02_backend/lambda-send-mail/lambda_function.py . && zip -r lambda-send-mail.zip psycopg2 lambda_function.py && rm lambda_function.py
+       run: cp 02_backend/lambda-send-mail/lambda_function.py . && cp 02_backend/common/util.py . && zip -r lambda-send-mail.zip psycopg2 lambda_function.py util.py
 
      - name: Configure AWS credentials (key id)
        run: aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
