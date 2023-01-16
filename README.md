@@ -116,7 +116,7 @@ The following diagram ilustrates the local architecture:
 <p align="center">
   <img src="diagrams/architecture_local.png" width="750" title="hover text">
 </p>
-# Considerations aboutn email sending in local
+# Considerations about email sending in local
 This solutions uses SMTP protocol to send emails. Not all email providers allow to send emails programatically. To be able to test this functionality, it's a pre-requisite to have an outlook or hotmail acount. (For testing purposes, the sender and recipient will be the same person, and the client's email will be added as CC).
 
 # Considerations aboutn email sending in AWS
@@ -211,7 +211,7 @@ Open an internet browser and enter into following url:
   <img src="images/screen1.png" width="750" title="hover text">
 </p>
 
-12. **Upload csv file with transactions**
+13. **Upload csv file with transactions**
 
  - Clic **"Choose File"** button
  - Pick "txns.csv" file 
@@ -243,13 +243,13 @@ Open an internet browser and enter into following url:
 
   (Emails contains data only for a single client.)
 
-14. **More tests**
+13. **More tests**
 
 Is possible to repeat Steps 12 and 13 to add more data and see how data change. It's also possible to edit the content of **"txns.csv"** file (however the app does not validate number of columns or datatypes of file, so avoid changes on the data structure of the file).
 
 15. **Sopt containers**
 
-Once validations are done, is possible to stop both Docker containers pressing in each terminal:
+Once validations are done, is possible to stop both Docker containers by pressing in each terminal:
 
 `Ctrl+C`
 
