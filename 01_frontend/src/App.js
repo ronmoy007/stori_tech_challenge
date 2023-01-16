@@ -58,6 +58,7 @@ function App() {
       }
       </style>
       <img style={{ width: "50%", height: "50%" }} src={logo} alt="Stori logo" />
+      <br></br><br></br>
       <input type="file" onChange={handleFileChange} />
       <button disabled={!isButtonEnabled(file)} onClick={handleSubmit} >Upload</button>
       <br></br><br></br>
@@ -91,7 +92,7 @@ function App() {
         </tbody>
       </table>
       <br></br><br></br>
-      <table style={{width:'50%'}}>
+      <table style={{width:'100%'}}>
       <caption><strong>Summary of transactions by month</strong></caption>
         <thead>
           <tr>
@@ -99,7 +100,12 @@ function App() {
             <th>Name</th>
             <th>Year</th>
             <th>Month name</th>
-            <th>Number of transactions</th>
+            <th>No. of transactions by month</th>
+            <th>Total balance by month</th>
+            <th>Total credit by month</th>
+            <th>Average credit by month</th>
+            <th>Total debit by month</th>
+            <th>Average debit by month</th>
           </tr>
         </thead>
         <tbody>
@@ -110,6 +116,11 @@ function App() {
               <td align='left'>{item_months[2]}</td>
               <td align='left'>{item_months[4]}</td>
               <td align='right'>{item_months[5]}</td>
+              <td align='right'>{item_months[6]}</td>
+              <td align='right'>{item_months[7]}</td>
+              <td align='right'>{item_months[8]}</td>
+              <td align='right'>{item_months[9]}</td>
+              <td align='right'>{item_months[10]}</td>
             </tr>
           ))}
         </tbody>
