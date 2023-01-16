@@ -2,22 +2,71 @@ import os
 import psycopg2
 
 str_query_months = '''
+with credit as (
+	SELECT 
+		transaction.client_id,
+		extract(year from transaction.txn_date) as txn_year_num,
+		extract(month from transaction.txn_date) as txn_month_num,
+		to_char(transaction.txn_date, 'Month') txn_month_name,
+		sum(transaction.amount) as total,
+		avg(transaction.amount) average
+	FROM transaction
+	where amount > 0
+	group by 
+		transaction.client_id,
+		extract(year from transaction.txn_date),
+		extract(month from transaction.txn_date),
+		to_char(transaction.txn_date, 'Month')
+), 
+debit as (
+	SELECT 
+		transaction.client_id,
+		extract(year from transaction.txn_date) as txn_year_num,
+		extract(month from transaction.txn_date) as txn_month_num,
+		to_char(transaction.txn_date, 'Month') txn_month_name,
+		sum(transaction.amount) as total,
+		avg(transaction.amount) average
+	FROM transaction
+	where amount < 0
+	group by 
+		transaction.client_id,
+		extract(year from transaction.txn_date),
+		extract(month from transaction.txn_date),
+		to_char(transaction.txn_date, 'Month')
+)
 select 
 	client.id,
 	client.name,
 	extract(year from transaction.txn_date) as txn_year_num,
 	extract(month from transaction.txn_date) as txn_month_num,
 	to_char(transaction.txn_date, 'Month') txn_month_name,
-	count(extract(month from transaction.txn_date)) as txn_month_count
+	count(extract(month from transaction.txn_date)) as txn_month_count,
+	coalesce(credit.total,0) + coalesce(debit.total,0) as total_balance_by_month,
+	coalesce(credit.total,0) as credit_total_by_month,
+	coalesce(credit.average,0) as credit_average_by_month,
+	coalesce(debit.total,0) as debit_total_by_month,
+	coalesce(debit.average,0) as debit_average_by_month
 from client
 left join transaction on client.id = transaction.client_id
+left join credit 
+	on (client.id = credit.client_id 
+		and extract(year from transaction.txn_date) = credit.txn_year_num
+		and extract(month from transaction.txn_date) = credit.txn_month_num)
+left join debit 
+	on (client.id = debit.client_id 
+		and extract(year from transaction.txn_date) = debit.txn_year_num
+		and extract(month from transaction.txn_date) = debit.txn_month_num)
 {condition}
 group by 
 	client.id,
 	client.name,
 	extract(year from transaction.txn_date),
 	extract(month from transaction.txn_date),
-	TO_CHAR(transaction.txn_date, 'Month')
+	to_char(transaction.txn_date, 'Month'),
+	credit.total,
+	credit.average,
+	debit.total,
+	debit.average
 order by 
 	client.id,
 	extract(year from transaction.txn_date),

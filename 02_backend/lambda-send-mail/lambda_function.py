@@ -33,7 +33,7 @@ def send_email(client_id):
     string_txns_by_month_html = ""
     for line in months_data:
         string_txns_by_month_plain = string_txns_by_month_plain + f"Number of transactions in {line[3]} {line[4]}:\r\n\r\n"
-        string_txns_by_month_html = string_txns_by_month_html + f"<tr><td align='right'>{line[2]}</td><td align='right'>{line[4]}</td><td align='right'>{line[5]}</td></tr>"
+        string_txns_by_month_html = string_txns_by_month_html + f"<tr><td align='right'>{line[2]}</td><td align='right'>{line[4]}</td><td align='right'>{line[5]}</td><td align='right'>{line[6]:.2f}</td><td align='right'>{line[7]:.2f}</td><td align='right'>{line[8]:.2f}</td><td align='right'>{line[9]:.2f}</td><td align='right'>{line[10]:.2f}</td></tr>"
 
     plain_text = f"Summary of transactions for {user_name}\r\n"
     f"Total balance is {user_total_balance:.2f}\r\n\r\n"
@@ -82,6 +82,11 @@ def send_email(client_id):
                         <th><span style="font-weight: 400; text-align: left; background-color: rgb(255, 255, 255);">Year</span><br></th>
                         <th><span style="font-weight: 400; text-align: left; background-color: rgb(255, 255, 255);">Month</span><br></th>
                         <th><span style="font-weight: 400; text-align: left; background-color: rgb(255, 255, 255);">Number of transactions</span></th>
+                        <th><span style="font-weight: 400; text-align: left; background-color: rgb(255, 255, 255);">Total balance by month</span></th>
+                        <th><span style="font-weight: 400; text-align: left; background-color: rgb(255, 255, 255);">Total credit by month</span></th>
+                        <th><span style="font-weight: 400; text-align: left; background-color: rgb(255, 255, 255);">Average credit by month</span></th>
+                        <th><span style="font-weight: 400; text-align: left; background-color: rgb(255, 255, 255);">Total debit by month</span></th>
+                        <th><span style="font-weight: 400; text-align: left; background-color: rgb(255, 255, 255);">Average debit by month</span></th>
                     </tr>
                 </thead>
                 <tbody>	
