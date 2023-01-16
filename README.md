@@ -116,18 +116,6 @@ The following diagram ilustrates the local architecture:
 <p align="center">
   <img src="diagrams/architecture_local.png" width="750" title="hover text">
 </p>
-
-The design of architecture not only was designed to offer a friendly UI, but to be able to set up a CI/CD mechanism in a easy way.
-
-For every push into main branch, github actions:
- - Zips the code for every lambda 
- - Uploads the zip file into aws to update aws lambdas (*backend*)
- - Generates a build for react app 
- - Uploads the build into S3 bucket (*frontend*)
- - Refreshes CloudFront (*frontend*)
-
-Since the solution is a monorepo, even if there's a change only in the code of a lambda function, all solution is deployded into production. The design of the solution and repo is made in such way that it could be easily split frontend and backend (or even split lambdas) into different repos.
-
 # Considerations aboutn email sending in local
 This solutions uses SMTP protocol to send emails. Not all email providers allow to send emails programatically. To be able to test this functionality, it's a pre-requisite to have an outlook or hotmail acount. (For testing purposes, the sender and recipient will be the same person, and the client's email will be added as CC).
 
@@ -269,24 +257,25 @@ After any modification in the code will be necesary to run again:
 
 `https://d22r1r8etu5oih.cloudfront.net/`
 
-
+<p align="center">
+  <img src="images/screen5.png" width="750" title="hover text">
+</p>
 
-DB_URL: database-1.cqnvbhfjhcz3.us-east-1.rds.amazonaws.com
-DB_DBNAME: stori_challenge_db
-DB_USERNAME: postgres
-DB_PASSWD: stori_challenge
+The app is already ready to:
+- Pick files
+- Upload files
+- See data updated in UI
+- The app also sends emails, but as it was mentioned above: at the moment AWS account is only allowed to sendmails to authorized emails (so my personal account will recieve all mails triggered in AWS).
 
-PGPASSWORD=stori_challenge psql -h database-1.cqnvbhfjhcz3.us-east-1.rds.amazonaws.com -U postgres -d stori_challenge_db -a -f 03_database/create_database.sql
-PGPASSWORD=stori_challenge psql -h database-1.cqnvbhfjhcz3.us-east-1.rds.amazonaws.com -U postgres -d stori_challenge_db -a -f 03_database/create_tables.sql
-PGPASSWORD=stori_challenge psql -h database-1.cqnvbhfjhcz3.us-east-1.rds.amazonaws.com -U postgres -d stori_challenge_db -a -f 03_database/load_users.sql
+# CI/CD
 
-PGPASSWORD=1234 psql -h localhost -U postgres -a -f 03_database/create_database.sql
+This architecture not only was designed to offer a friendly UI, but to be able to set up a CI/CD mechanism in an easy way.
 
+For every push into main branch, github actions:
+ - Zips the code for every lambda 
+ - Uploads the zip file into aws to update aws lambdas (*backend*)
+ - Generates a build for react app 
+ - Uploads the build into S3 bucket (*frontend*)
+ - Refreshes CloudFront (*frontend*)
 
-brew services start postgresql
-brew services stop postgresql
-
-
-PGPASSWORD=1234 psql -h localhost -U postgres -a -f 03_database/create_database.sql
-PGPASSWORD=1234 psql -h localhost -U postgres -d stori_challenge_db -a -f 03_database/create_tables.sql
-PGPASSWORD=1234 psql -h localhost -U postgres -d stori_challenge_db -a -f 03_database/load_users.sql
+Since the solution is a monorepo, even if there's a change only in the code of a lambda function, all solution is deployded into production. The design of the solution and repo is made in such way that it would be easy to split frontend and backend (or even split lambdas) into different repos.
