@@ -12,7 +12,6 @@ COPY 02_backend/lambda-process-file/lambda_function.py lambda_process_file.py
 COPY 02_backend/lambda-send-mail/lambda_function.py lambda_send_mail.py
 COPY 02_backend/lambda-send-mail/Stori-horizontal-11.jpg .
 COPY 02_backend/common/util.py .
-COPY 02_backend/common/psycopg2 .
 
 
 RUN pip install --no-cache-dir -r requirements.txt
