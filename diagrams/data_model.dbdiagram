@@ -1,15 +1,15 @@
 Table client{
-  id          varchar
+  id          int
   name        varchar
   email       varchar
 }
 
 Table transaction{
-  id          varchar
+  id          int
   client_id   varchar
   txn_date    date
   amount      float
   source_file varchar
 }
 
-Ref: client.id > transaction.client_id
+Ref: client.id - transaction.client_id
