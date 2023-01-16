@@ -120,7 +120,7 @@ The following diagram ilustrates the local architecture:
 This solutions uses SMTP protocol to send emails. Not all email providers allow to send emails programatically. To be able to test this functionality, it's a pre-requisite to have an outlook or hotmail acount. (For testing purposes, the sender and recipient will be the same person, and the client's email will be added as CC).
 
 # Considerations aboutn email sending in AWS
-Sending emails in AWS is not so straighforward, because by default AWS blocks email ports (25, 587, ...). AWS enourages users to use AWS-SES service. But even using that service, there are some restrictions. At the moment AWS account is only allowed to sendmails to authorized emails (so my personal account will recieve all mails triggered in AWS).
+Sending emails in AWS is not so straighforward, because by default AWS blocks email ports (25, 587, ...). A petition was sent to AWS to remove that restriction, so at the moment the email sending in aws is not available.
 
 # Steps to test the solution locally
 
@@ -227,9 +227,17 @@ Open an internet browser and enter into following url:
 
 13. **Send email**
 
-  In the section **"Summary of transactions"** click **"Send mail"** on any client (the first client contains the same data provided in the challenge example). After a few seconds, an email will be delivered into the email account provided in Step 7. The client email is included in CC email section:
+  In the section **"Summary of transactions"** click **"Send mail"** on any client (the first client contains the same data provided in the challenge example). 
 
-  <p align="center">
+  A confirmation of the request will be shown in screen:
+
+<p align="center">
+  <img src="images/screen3_5.png" width="750" title="hover text">
+</p>
+  
+  After a few seconds, an email will be delivered into the email account provided in Step 7. The client email is included in CC email section:
+
+<p align="center">
   <img src="images/screen4.png" width="750" title="hover text">
 </p>
 
@@ -265,7 +273,7 @@ The app is already ready to:
 - Pick files
 - Upload files
 - See data updated in UI
-- The app also sends emails, but as it was mentioned above: at the moment AWS account is only allowed to sendmails to authorized emails (so my personal account will recieve all mails triggered in AWS).
+- The app also has the code to send emails, but as it was mentioned above: a petition was sent to AWS to remove restrictions on port 25 and 587. Until recieveng the permission, this functionality is not available on the cloud. However the same code for local host must be functional for the aws-lambda (as the rest of the lambdas)
 
 # CI/CD
 
