@@ -24,7 +24,7 @@ jobs:
      - name: Zip the code for lambda-process-file
        run: cp 02_backend/lambda-process-file/lambda_function.py . && cp 02_backend/common/util.py . && zip -r lambda-process-file.zip psycopg2 lambda_function.py util.py
      - name: Zip the code for lambda-send-mail
-       run: cp 02_backend/lambda-send-mail/lambda_function.py . && cp 02_backend/common/util.py . && zip -r lambda-send-mail.zip psycopg2 lambda_function.py util.py
+       run: cp 02_backend/lambda-send-mail/Stori-horizontal-11.jpg . && cp 02_backend/lambda-send-mail/lambda_function.py . && cp 02_backend/common/util.py . && zip -r lambda-send-mail.zip psycopg2 lambda_function.py util.py
 
      - name: Configure AWS credentials (key id)
        run: aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
