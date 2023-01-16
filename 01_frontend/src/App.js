@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import logo from './Stori-horizontal-11.jpg'
+import Modal from './Modal';
 
 function App() {
   const [file, setFile] = useState(null);
   const [summary, setSummary] = useState([])
   const [months, setMonths] = useState([])
+  const [showModal, setShowModal] = useState(false);
 
   try {
     useEffect(() => {
@@ -41,11 +43,16 @@ function App() {
  
   const handleSendMail = async (client_id) => {
     var payload = {client_id}
-    await axios.post(`${process.env.REACT_APP_URL_BACKEND}/send-mail`, payload);
+    axios.post(`${process.env.REACT_APP_URL_BACKEND}/send-mail`, payload);
+    setShowModal(true);
   }
 
   function isButtonEnabled(reference_value) {
     return !(reference_value === null);
+  }
+
+  function handleClose() {
+    setShowModal(false);
   }
 
   return (
@@ -61,6 +68,7 @@ function App() {
       <br></br><br></br>
       <input type="file" onChange={handleFileChange} />
       <button disabled={!isButtonEnabled(file)} onClick={handleSubmit} >Upload</button>
+      <Modal open = {showModal} close = {handleClose}/>
       <br></br><br></br>
       <table style={{width:'100%'}}>
         <caption><strong>Summary of transactions</strong></caption>
@@ -125,7 +133,6 @@ function App() {
           ))}
         </tbody>
       </table>
-
     </div>
   );
 }
