@@ -159,7 +159,7 @@ Open the file:
 `02_backend/Dockerfile`
 
 And update lines from 21 to 24 with the credentials for local DB
-and 28 to 30 with the credentials for local DB and the outlook to send emails.
+and 28 to 30 with outlook credentials to send emails.
 
 <p align="center">
   <img src="images/update_credentials.png" width="750" title="hover text">
